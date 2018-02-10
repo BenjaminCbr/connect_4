@@ -12,14 +12,30 @@ export default class Game extends React.Component {
   //   - Is there a winner?
   //   - Whose turn is it?
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      grid: this.emptyGrid()
+    };
+  }
+
   render() {
     return [
       <PlayersDisplay player_1={this.props.player_1} player_2={this.props.player_2} />,
-      <Connect4Grid grid_content_list={this.emptyGrid()} />
+      <Connect4Grid grid_content_list={this.state.grid} handleClickGenerator={this.handleClickGenerator} />
     ];
   };
 
   private
+
+  handleClickGenerator = (i, j) => {
+    var clickHandler = () => {
+      var newGrid = this.state.grid.map(col => [...col]);
+      newGrid[i][j] = CONTENTS.RED;
+      this.setState({grid: newGrid});
+    };
+    return clickHandler.bind(this);
+  }
 
   emptyGrid() {
     return Array.from(new Array(7), (_, __) => {

@@ -9,7 +9,7 @@ class Connect4Cell extends React.Component {
   //   - content: Integer representing the content of the cell
 
   render() {
-    return <td><img src={this.imageForCell()} width="50" length="50"/></td>
+    return <td onClick={this.props.onclick}><img src={this.imageForCell()} width="50" length="50"/></td>
   };
 
   imageForCell() {

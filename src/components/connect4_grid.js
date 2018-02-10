@@ -12,12 +12,15 @@ export default class Connect4Grid extends React.Component {
         {this.props.grid_content_list.map((line, i) => {
           return [
             <tr>
-              {line.map((cell, j) => {return <Connect4Cell content={cell}/>})}
-              </tr>
-            ];
-          })
-        }
-      </table>
-    )
-  };
+              {line.map((cell, j) => {
+                return <Connect4Cell content={cell}
+                  onclick={this.props.handleClickGenerator(i, j)}/>
+              })}
+            </tr>
+          ];
+        })
+      }
+    </table>
+  )
+};
 };
