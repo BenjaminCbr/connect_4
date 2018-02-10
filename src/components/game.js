@@ -31,9 +31,21 @@ export default class Game extends React.Component {
 
   handleClickGenerator = (i, j) => {
     return () => {
+      // Cloning former grid
       var newGrid = this.state.grid.map(col => [...col]);
-      newGrid[i][j] = this.state.currentPlayer;
+
+      // Here we need to determine which row should be colored
+      var targetColumn = newGrid.map(line => line[j]);
+      var firstNonEmptyRow = targetColumn.findIndex(element => element != CONTENTS.EMPTY);
+      var rowToFill = firstNonEmptyRow === -1 ? 6 : firstNonEmptyRow - 1;
+
+      // Filling the Cell
+      newGrid[rowToFill][j] = this.state.currentPlayer;
+
+      // Changing player turn
       var nextPlayer = this.state.currentPlayer === CONTENTS.RED ? CONTENTS.YELLOW : CONTENTS.RED
+
+      // Setting new state
       this.setState({
         grid: newGrid,
         currentPlayer: nextPlayer
