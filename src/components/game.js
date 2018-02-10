@@ -15,7 +15,8 @@ export default class Game extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      grid: this.emptyGrid()
+      grid: this.emptyGrid(),
+      currentPlayer: CONTENTS.RED
     };
   }
 
@@ -29,12 +30,15 @@ export default class Game extends React.Component {
   private
 
   handleClickGenerator = (i, j) => {
-    var clickHandler = () => {
+    return () => {
       var newGrid = this.state.grid.map(col => [...col]);
-      newGrid[i][j] = CONTENTS.RED;
-      this.setState({grid: newGrid});
+      newGrid[i][j] = this.state.currentPlayer;
+      var nextPlayer = this.state.currentPlayer === CONTENTS.RED ? CONTENTS.YELLOW : CONTENTS.RED
+      this.setState({
+        grid: newGrid,
+        currentPlayer: nextPlayer
+      });
     };
-    return clickHandler.bind(this);
   }
 
   emptyGrid() {
